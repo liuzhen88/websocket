@@ -46,6 +46,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+io.use(function (socket, next) {
+  console.log('io使用中间件');
+  next();
+});
+
 io.on('connection',function (client) {
   console.log('socket io connect success');
   //客户端向服务器端推送数据
