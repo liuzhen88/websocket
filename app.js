@@ -46,8 +46,20 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-io.on('connection',function () {
+io.on('connection',function (client) {
   console.log('socket io connect success');
+  //客户端向服务器端推送数据
+  client.on('msg',function (data) {
+    console.log('客户端推送数据成功');
+    console.log(data);
+  });
+  //客户端退出连接
+  client.on('discount',function () {
+    console.log('客户端退出连接');
+  });
+
+  //服务器端推送消息给客户端
+  client.emit('sendMsgToClient',{msg:'来着Node.js推送的消息'});
 });
 
 server.listen(3000,function () {
